@@ -1,0 +1,277 @@
+<a href="index.html">Return to UKSRS</a>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESRS under CSRD Summary</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 15px;
+            color: #333;
+            font-size: 16px; /* Optimized for iPhone 11 */
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-top: 0;
+            padding-top: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            color: #2980b9;
+            margin-top: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 18px;
+            color: #16a085;
+        }
+        .home-link {
+            display: block;
+            background: #f8f9fa;
+            padding: 10px 15px;
+            margin: -15px -15px 15px -15px;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            color: #2980b9;
+            text-decoration: none;
+        }
+        .highlight-box {
+            background-color: #e8f4fc;
+            padding: 12px;
+            border-left: 4px solid #2980b9;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .standards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 15px;
+        }
+        .standards-table th, .standards-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .standards-table th {
+            background-color: #f2f2f2;
+        }
+        .standards-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        @media (max-width: 375px) {
+            body {
+                font-size: 15px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://github.com/[your-username]/[your-repo]/blob/main/index.html" class="home-link">← Back to Home (GitHub)</a>
+
+    <h1>European Sustainability Reporting Standards (ESRS) under CSRD</h1>
+    <p><em>Summary as of June 28, 2025 | Based on final adopted standards</em></p>
+
+    <div class="highlight-box">
+        <h3>Key Facts</h3>
+        <ul>
+            <li><strong>Effective:</strong> First reports due 2025 (covering FY2024) for large listed companies [citation:6][citation:10]</li>
+            <li><strong>Scope:</strong> ~50,000 EU companies + non-EU companies with significant EU operations [citation:1][citation:6]</li>
+            <li><strong>Standards:</strong> 12 reporting standards covering environmental, social and governance topics [citation:4][citation:10]</li>
+            <li><strong>Core Concept:</strong> Double materiality (financial + impact perspectives) [citation:4][citation:7]</li>
+        </ul>
+    </div>
+
+    <h2>1. ESRS Framework Structure</h2>
+    <p>The ESRS consists of 12 standards organized into three categories [citation:4][citation:10]:</p>
+
+    <table class="standards-table">
+        <tr>
+            <th>Category</th>
+            <th>Standard</th>
+            <th>Focus Area</th>
+        </tr>
+        <tr>
+            <td rowspan="2">Cross-cutting</td>
+            <td>ESRS 1</td>
+            <td>General Requirements</td>
+        </tr>
+        <tr>
+            <td>ESRS 2</td>
+            <td>General Disclosures</td>
+        </tr>
+        <tr>
+            <td rowspan="5">Environmental</td>
+            <td>ESRS E1</td>
+            <td>Climate Change</td>
+        </tr>
+        <tr>
+            <td>ESRS E2</td>
+            <td>Pollution</td>
+        </tr>
+        <tr>
+            <td>ESRS E3</td>
+            <td>Water & Marine Resources</td>
+        </tr>
+        <tr>
+            <td>ESRS E4</td>
+            <td>Biodiversity & Ecosystems</td>
+        </tr>
+        <tr>
+            <td>ESRS E5</td>
+            <td>Circular Economy</td>
+        </tr>
+        <tr>
+            <td rowspan="4">Social</td>
+            <td>ESRS S1</td>
+            <td>Own Workforce</td>
+        </tr>
+        <tr>
+            <td>ESRS S2</td>
+            <td>Workers in Value Chain</td>
+        </tr>
+        <tr>
+            <td>ESRS S3</td>
+            <td>Affected Communities</td>
+        </tr>
+        <tr>
+            <td>ESRS S4</td>
+            <td>Consumers & End-Users</td>
+        </tr>
+        <tr>
+            <td>Governance</td>
+            <td>ESRS G1</td>
+            <td>Business Conduct</td>
+        </tr>
+    </table>
+
+    <h2>2. Core Requirements</h2>
+    <h3>Double Materiality Assessment</h3>
+    <p>Companies must evaluate both [citation:4][citation:7]:</p>
+    <ul>
+        <li><strong>Impact Materiality:</strong> How the company affects people/environment</li>
+        <li><strong>Financial Materiality:</strong> How sustainability matters affect the company</li>
+    </ul>
+
+    <h3>Mandatory Disclosures</h3>
+    <p>Only ESRS 2 General Disclosures are fully mandatory. Other standards apply based on materiality assessment, except [citation:7][citation:10]:</p>
+    <ul>
+        <li>Climate change (ESRS E1) requires explanation if deemed immaterial</li>
+        <li>Financial institutions must disclose certain data points regardless of materiality</li>
+    </ul>
+
+    <div class="highlight-box">
+        <h3>Value Chain Reporting</h3>
+        <p>Companies must report on impacts, risks and opportunities across their entire value chain, including [citation:4][citation:10]:</p>
+        <ul>
+            <li>Upstream suppliers</li>
+            <li>Downstream customers</li>
+            <li>Investments (for financial institutions)</li>
+        </ul>
+    </div>
+
+    <h2>3. Implementation Timeline</h2>
+    <p>Phased implementation based on company size and type [citation:6][citation:8]:</p>
+    <table class="standards-table">
+        <tr>
+            <th>Company Type</th>
+            <th>First Report Due</th>
+            <th>Coverage Period</th>
+        </tr>
+        <tr>
+            <td>Large listed companies</td>
+            <td>2025</td>
+            <td>FY2024</td>
+        </tr>
+        <tr>
+            <td>Other large companies</td>
+            <td>2026</td>
+            <td>FY2025</td>
+        </tr>
+        <tr>
+            <td>Listed SMEs</td>
+            <td>2027</td>
+            <td>FY2026</td>
+        </tr>
+        <tr>
+            <td>Non-EU companies</td>
+            <td>2029</td>
+            <td>FY2028</td>
+        </tr>
+    </table>
+
+    <h3>Phase-in Reliefs</h3>
+    <p>Certain disclosures can be deferred [citation:7][citation:10]:</p>
+    <ul>
+        <li><strong>All companies:</strong> May omit financial effects of environmental risks for 1 year (qualitative only for 3 years)</li>
+        <li><strong><750 employees:</strong> Can defer Scope 3 GHG emissions and workforce disclosures for 1 year</li>
+        <li><strong><750 employees:</strong> May omit biodiversity, value chain workers, communities and consumer disclosures for 2 years</li>
+    </ul>
+
+    <h2>4. Reporting Format</h2>
+    <p>ESRS requires [citation:4][citation:10]:</p>
+    <ul>
+        <li>Integration with annual financial report in a "Sustainability Statement"</li>
+        <li>Digital tagging for machine readability (European Single Access Point)</li>
+        <li>Assurance requirement (limited assurance initially)</li>
+    </ul>
+
+    <div class="highlight-box">
+        <h3>Key Changes from Draft to Final Standards</h3>
+        <ul>
+            <li>Reduced mandatory data points (now mostly materiality-dependent) [citation:7]</li>
+            <li>Stronger alignment with TCFD framework and ISSB standards [citation:10]</li>
+            <li>Added phase-in reliefs for smaller companies [citation:7]</li>
+            <li>More voluntary disclosure options (e.g., biodiversity transition plans) [citation:7]</li>
+        </ul>
+    </div>
+
+    <h2>5. Interoperability with Other Frameworks</h2>
+    <p>EFRAG has worked to align ESRS with [citation:3][citation:5][citation:9]:</p>
+    <ul>
+        <li><strong>ISSB Standards:</strong> 85% alignment on climate disclosures (IFRS S2 ↔ ESRS E1)</li>
+        <li><strong>GRI Standards:</strong> Interoperability index available</li>
+        <li><strong>TNFD:</strong> All 14 TNFD recommended disclosures reflected in ESRS</li>
+    </ul>
+
+    <h3>Practical Implementation Tips</h3>
+    <ol>
+        <li>Conduct double materiality assessment first [citation:7]</li>
+        <li>Build data collection systems for value chain information [citation:4]</li>
+        <li>Leverage phase-in periods strategically [citation:10]</li>
+        <li>Use interoperability guidance for companies reporting under multiple frameworks [citation:5]</li>
+        <li>Prepare for assurance requirements [citation:1]</li>
+    </ol>
+
+    <div class="footer">
+        <p><strong>Sources:</strong> PwC [1], Anthesis Group [4], EFRAG [3], KPMG [7], Workiva [10], Georgeson [6]</p>
+        <p><strong>Note:</strong> Replace the GitHub link placeholder with your actual repository path. This summary reflects the ESRS as adopted by the European Commission with updates through June 2025.</p>
+    </div>
+</body>
+</html>
