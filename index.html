@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU/UK Sustainability Regulation Hub</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #f8f9fa;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #005ea5;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .subtitle {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .card h2 {
+            color: #005ea5;
+            margin-top: 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .card p {
+            color: #666;
+            min-height: 60px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #005ea5;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #003d5a;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EU/UK Sustainability Regulation Hub</h1>
+        <p class="subtitle">Compliance frameworks for financial services and energy sectors</p>
+    </header>
+
+    <div class="card-container">
+        <div class="card">
+            <h2>UK Sustainability Reporting Standards</h2>
+            <p>Implementation guide for UK SRS S1 and S2 standards based on ISSB requirements, including transitional provisions for UK companies.</p>
+            <a href="uksrs.html" class="btn">View UK SRS Framework</a>
+        </div>
+
+        <div class="card">
+            <h2>European Sustainability Reporting Standards</h2>
+            <p>Complete ESRS reference under CSRD, including double materiality assessment and sector-specific disclosure requirements.</p>
+            <a href="esrs.html" class="btn">Explore ESRS</a>
+        </div>
+
+        <div class="card">
+            <h2>Omnibus Regulation</h2>
+            <p>2025 updates to EU sustainability reporting requirements with revised timelines and scope adjustments for energy companies.</p>
+            <a href="omnibus.html" class="btn">Review Changes</a>
+        </div>
+
+        <div class="card">
+            <h2>UK SRS - ESRS Interoperability</h2>
+            <p>Comparative analysis and implementation pathway for companies reporting under both UK and EU sustainability frameworks.</p>
+            <a href="interoperability.html" class="btn">Compare Frameworks</a>
+        </div>
+
+        <div class="card">
+            <h2>EU Taxonomy Alignment</h2>
+            <p>Technical screening criteria and transitional activity guidance for oil & gas companies seeking Taxonomy compliance.</p>
+            <a href="taxonomy.html" class="btn">View Taxonomy Guide</a>
+        </div>
+
+        <div class="card">
+            <h2>SFDR Compliance</h2>
+            <p>Step-by-step framework for Sustainable Finance Disclosure Regulation implementation in integrated energy companies.</p>
+            <a href="sfdr.html" class="btn">See SFDR Process</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>Last updated: June 2025 | This repository is maintained for educational purposes</p>
+        <p>For official regulations, always refer to government publications</p>
+    </footer>
+</body>
+</html>
