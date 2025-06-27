@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Regulatory Hub | Verification Required</title>
+    <style>
+        :root {
+            --primary: #005ea5;
+            --primary-dark: #003d5a;
+            --error: #d9534f;
+            --success: #5cb85c;
+            --warning: #f0ad4e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #f8f9fa;
+        }
+        .auth-container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .error {
+            color: var(--error);
+            margin-top: 10px;
+        }
+        .success {
+            color: var(--success);
+            margin-top: 10px;
+        }
+        .warning {
+            color: var(--warning);
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .corporate-email-note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .card h2 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        .card p {
+            color: #666;
+            min-height: 60px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+        .attempts-warning {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .supervisor-note {
+            background-color: #fff8e1;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .visitor-counter {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .timeout-warning {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--warning);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 100;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            .visitor-counter {
+                position: static;
+                margin-top: 20px;
+            }
+            .timeout-warning {
+                width: 90%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Timeout Warning -->
+    <div class="timeout-warning" id="timeout-warning">
+        Your session will expire in <span id="countdown">120</span> seconds. 
+        <button id="extend-session">Extend Session</button>
+    </div>
+
+    <div id="auth-flow" class="auth-container">
+        <!-- Step 1: Registration Form -->
+        <div id="register-form">
+            <h2>Professional Verification Required</h2>
+            <p>Access to these regulatory documents requires corporate email verification.</p>
+            
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="John Smith" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="company">Organization</label>
+                <input type="text" id="company" placeholder="Acme Corp" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Work Email</label>
+                <input type="email" id="email" placeholder="john.smith@yourcompany.com" required>
+                <p class="corporate-email-note">Only corporate email addresses allowed (no Gmail, Yahoo, etc.)</p>
+            </div>
+            
+            <button id="register-btn">Send Verification Code</button>
+            <p id="register-error" class="error hidden"></p>
+            
+            <div class="supervisor-note hidden" id="supervisor-note">
+                <strong>Supervisor Access Detected:</strong> Please enter your special verification code.
+            </div>
+        </div>
+
+        <!-- Step 2: OTP Verification -->
+        <div id="verify-form" class="hidden">
+            <h2>Verify Your Email</h2>
+            <p>We've sent a 6-digit code to <span id="email-display"></span></p>
+            
+            <div class="form-group">
+                <label for="otp">Verification Code</label>
+                <input type="text" id="otp" placeholder="Enter 6-digit code" maxlength="6" required>
+                <p class="attempts-warning" id="attempts-warning"></p>
+            </div>
+            
+            <button id="verify-btn">Verify & Access Documents</button>
+            <p id="verify-error" class="error hidden"></p>
+            <p id="verify-success" class="success hidden"></p>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden Until Auth) -->
+    <div id="main-content" class="hidden">
+        <header>
+            <h1>EU/UK Sustainability Regulation Hub</h1>
+            <p class="subtitle">Compliance frameworks for financial services and energy sectors</p>
+        </header>
+
+        <div class="card-container">
+            <div class="card">
+                <h2>UK Sustainability Reporting Standards</h2>
+                <p>Implementation guide for UK SRS S1 and S2 standards based on ISSB requirements.</p>
+                <a href="uksrs.html" class="btn">View UK SRS Framework</a>
+            </div>
+            <div class="card">
+                <h2>European Sustainability Reporting Standards</h2>
+                <p>Complete ESRS reference under CSRD, including double materiality assessment.</p>
+                <a href="esrs.html" class="btn">Explore ESRS</a>
+            </div>
+            <div class="card">
+                <h2>Omnibus Regulation</h2>
+                <p>2025 updates to EU sustainability reporting requirements.</p>
+                <a href="omnibus.html" class="btn">Review Changes</a>
+            </div>
+            <div class="card">
+                <h2>UK SRS - ESRS Interoperability</h2>
+                <p>Comparative analysis for companies reporting under both frameworks.</p>
+                <a href="interoperability.html" class="btn">Compare Frameworks</a>
+            </div>
+            <div class="card">
+                <h2>EU Taxonomy Alignment</h2>
+                <p>Technical screening criteria for oil & gas companies.</p>
+                <a href="taxonomy.html" class="btn">View Taxonomy Guide</a>
+            </div>
+            <div class="card">
+                <h2>SFDR Compliance</h2>
+                <p>Framework for Sustainable Finance Disclosure Regulation.</p>
+                <a href="sfdr.html" class="btn">See SFDR Process</a>
+            </div>
+        </div>
+
+        <div class="supervisor-note" id="supervisor-access-notice" style="display: none;">
+            <strong>Supervisor Access:</strong> You are viewing this content with elevated privileges.
+        </div>
+
+        <footer>
+            <p>Last updated: June 2025 | This repository is maintained for educational purposes</p>
+            <p>For official regulations, always refer to government publications</p>
+            <p id="access-log"></p>
+        </footer>
+    </div>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter" id="visitor-counter">
+        Visitors: <span id="counter">0</span>
+    </div>
+
+    <script>
+        // Security Configuration
+        const config = {
+            supervisorEmail: "anilahluwalia@gmail.com",
+            supervisorCode: "369777",
+            maxAttempts: 5,
+            lockoutTime: 300000, // 5 minutes in milliseconds
+            sessionTimeout: 120000, // 2 minutes in milliseconds
+            warningTime: 30000, // 30 seconds warning before timeout
+            prohibitedDomains: [
+                'gmail.com', 'yahoo.com', 'outlook.com', 
+                'hotmail.com', 'icloud.com', 'protonmail.com'
+            ]
+        };
+
+        // State Management
+        const state = {
+            attempts: 0,
+            lastAttempt: 0,
+            isLocked: false,
+            isSupervisor: false,
+            sessionTimer: null,
+            warningTimer: null
+        };
+
+        // DOM Elements
+        const elements = {
+            authFlow: document.getElementById('auth-flow'),
+            registerForm: document.getElementById('register-form'),
+            verifyForm: document.getElementById('verify-form'),
+            mainContent: document.getElementById('main-content'),
+            emailDisplay: document.getElementById('email-display'),
+            registerBtn: document.getElementById('register-btn'),
+            verifyBtn: document.getElementById('verify-btn'),
+            nameInput: document.getElementById('name'),
+            companyInput: document.getElementById('company'),
+            emailInput: document.getElementById('email'),
+            otpInput: document.getElementById('otp'),
+            registerError: document.getElementById('register-error'),
+            verifyError: document.getElementById('verify-error'),
+            verifySuccess: document.getElementById('verify-success'),
+            attemptsWarning: document.getElementById('attempts-warning'),
+            supervisorNote: document.getElementById('supervisor-note'),
+            supervisorAccessNotice: document.getElementById('supervisor-access-notice'),
+            accessLog: document.getElementById('access-log'),
+            counter: document.getElementById('counter'),
+            timeoutWarning: document.getElementById('timeout-warning'),
+            countdown: document.getElementById('countdown'),
+            extendSessionBtn: document.getElementById('extend-session')
+        };
+
+        // Initialize Visitor Counter
+        function initVisitorCounter() {
+            let count = localStorage.getItem('visitorCount') || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem('visitorCount', count);
+            elements.counter.textContent = count;
+        }
+
+        // Email Validation
+        function isValidCorporateEmail(email) {
+            const domain = email.split('@')[1];
+            return !config.prohibitedDomains.includes(domain.toLowerCase()) || 
+                   email === config.supervisorEmail;
+        }
+
+        // Session Management
+        function startSessionTimer() {
+            // Clear existing timers
+            clearTimeout(state.sessionTimer);
+            clearTimeout(state.warningTimer);
+            
+            // Set session timeout
+            state.sessionTimer = setTimeout(logout, config.sessionTimeout);
+            
+            // Set warning timeout
+            const warningTime = config.sessionTimeout - config.warningTime;
+            state.warningTimer = setTimeout(showTimeoutWarning, warningTime);
+        }
+
+        function showTimeoutWarning() {
+            let seconds = Math.floor(config.warningTime / 1000);
+            elements.countdown.textContent = seconds;
+            elements.timeoutWarning.style.display = 'block';
+            
+            // Update countdown every second
+            const countdownInterval = setInterval(() => {
+                seconds--;
+                elements.countdown.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+        }
+
+        function extendSession() {
+            elements.timeoutWarning.style.display = 'none';
+            startSessionTimer();
+        }
+
+        function logout() {
+            // Clear session data
+            localStorage.removeItem('verifiedUser');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('userCompany');
+            sessionStorage.clear();
+            
+            // Clear timers
+            clearTimeout(state.sessionTimer);
+            clearTimeout(state.warningTimer);
+            
+            // Reset state
+            state.attempts = 0;
+            state.isLocked = false;
+            state.isSupervisor = false;
+            
+            // Show auth form
+            elements.authFlow.classList.remove('hidden');
+            elements.mainContent.classList.add('hidden');
+            elements.registerForm.classList.remove('hidden');
+            elements.verifyForm.classList.add('hidden');
+            elements.timeoutWarning.style.display = 'none';
+            
+            // Clear form fields
+            elements.nameInput.value = '';
+            elements.companyInput.value = '';
+            elements.emailInput.value = '';
+            elements.otpInput.value = '';
+        }
+
+        // Registration Handler
+        elements.registerBtn.addEventListener('click', () => {
+            const email = elements.emailInput.value;
+            const name = elements.nameInput.value;
+            const company = elements.companyInput.value;
+            
+            if (!isValidCorporateEmail(email)) {
+                showError(elements.registerError, 
+                    'Please use your corporate email address (no free email providers)');
+                return;
+            }
+
+            // Check for supervisor access
+            state.isSupervisor = (email === config.supervisorEmail);
+            if (state.isSupervisor) {
+                elements.supervisorNote.classList.remove('hidden');
+            }
+
+            // Store user details temporarily
+            sessionStorage.setItem('reg_name', name);
+            sessionStorage.setItem('reg_company', company);
+            sessionStorage.setItem('reg_email', email);
+            
+            // Show verification form
+            elements.emailDisplay.textContent = email;
+            elements.registerForm.classList.add('hidden');
+            elements.verifyForm.classList.remove('hidden');
+
+            updateAttemptsWarning();
+        });
+
+        // Verification Handler
+        elements.verifyBtn.addEventListener('click', () => {
+            const otp = elements.otpInput.value;
+            const email = sessionStorage.getItem('reg_email');
+            
+            // Check for lockout
+            if (state.isLocked) {
+                const timeLeft = Math.ceil((config.lockoutTime - (Date.now() - state.lastAttempt)) / 1000 / 60);
+                showError(elements.verifyError, 
+                    `Too many attempts. Please try again in ${timeLeft} minutes.`);
+                return;
+            }
+            
+            if (!email || !otp || otp.length !== 6) {
+                showError(elements.verifyError, 'Please enter a valid 6-digit code');
+                return;
+            }
+
+            // Check verification code (only supervisor bypass exists)
+            if (state.isSupervisor && otp === config.supervisorCode) {
+                handleSuccessfulVerification(email);
+            } else {
+                handleFailedAttempt();
+            }
+        });
+
+        // Extend Session Button
+        elements.extendSessionBtn.addEventListener('click', extendSession);
+
+        // Helper Functions
+        function handleSuccessfulVerification(email) {
+            showSuccess(elements.verifySuccess, 'Verification successful!');
+            hideError(elements.verifyError);
+            
+            // Show main content
+            setTimeout(() => {
+                elements.authFlow.classList.add('hidden');
+                elements.mainContent.classList.remove('hidden');
+                
+                // Store verification
+                localStorage.setItem('verifiedUser', 'true');
+                localStorage.setItem('userEmail', email);
+                localStorage.setItem('userName', sessionStorage.getItem('reg_name'));
+                localStorage.setItem('userCompany', sessionStorage.getItem('reg_company'));
+                
+                // Show supervisor notice if applicable
+                if (state.isSupervisor) {
+                    elements.supervisorAccessNotice.style.display = 'block';
+                }
+                
+                // Log access
+                logAccess(email, state.isSupervisor ? 'supervisor' : 'standard');
+                
+                // Start session timer
+                startSessionTimer();
+            }, 1000);
+        }
+
+        function handleFailedAttempt() {
+            state.attempts++;
+            state.lastAttempt = Date.now();
+            
+            if (state.attempts >= config.maxAttempts) {
+                state.isLocked = true;
+                setTimeout(() => {
+                    state.isLocked = false;
+                    state.attempts = 0;
+                    updateAttemptsWarning();
+                }, config.lockoutTime);
+            }
+            
+            showError(elements.verifyError, 
+                `Invalid verification code. ${config.maxAttempts - state.attempts} attempts remaining.`);
+            updateAttemptsWarning();
+        }
+
+        function updateAttemptsWarning() {
+            if (state.attempts > 0) {
+                elements.attemptsWarning.textContent = 
+                    `Attempts: ${state.attempts}/${config.maxAttempts}`;
+                elements.attemptsWarning.style.color = 
+                    state.attempts >= config.maxAttempts - 2 ? 'var(--error)' : 'var(--warning)';
+            } else {
+                elements.attemptsWarning.textContent = '';
+            }
+        }
+
+        function showError(element, message) {
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function hideError(element) {
+            element.classList.add('hidden');
+        }
+
+        function showSuccess(element, message) {
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function logAccess(email, accessType) {
+            const now = new Date();
+            const logEntry = `Accessed by ${email} (${accessType}) at ${now.toLocaleString()}`;
+            elements.accessLog.textContent = logEntry;
+            
+            // In a real implementation, you would send this to a server
+            console.log('ACCESS LOG:', logEntry);
+        }
+
+        // Initialize the page
+        function init() {
+            initVisitorCounter();
+            
+            // Check if already verified
+            if (localStorage.getItem('verifiedUser') === 'true') {
+                elements.authFlow.classList.add('hidden');
+                elements.mainContent.classList.remove('hidden');
+                
+                // Check for supervisor access
+                const userEmail = localStorage.getItem('userEmail');
+                if (userEmail === config.supervisorEmail) {
+                    elements.supervisorAccessNotice.style.display = 'block';
+                    state.isSupervisor = true;
+                }
+                
+                // Display last access time
+                elements.accessLog.textContent = `Last accessed by ${userEmail}`;
+                
+                // Start session timer
+                startSessionTimer();
+            }
+        }
+
+        // Start the application
+        init();
+        
+        // Reset session timer on user activity
+        document.addEventListener('mousemove', startSessionTimer);
+        document.addEventListener('keypress', startSessionTimer);
+        document.addEventListener('click', startSessionTimer);
+    </script>
+</body>
+</html>
