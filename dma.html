@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Materiality Process | CSRD Compliance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a7c5f;
+            --primary-dark: #08684f;
+            --primary-light: #e0f2eb;
+            --secondary: #2c5f7c;
+            --accent: #f9a826;
+            --light: #f8fafc;
+            --dark: #1a2e35;
+            --text: #334e58;
+            --transition: all 0.3s ease;
+            --border-radius: 8px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9fbfa;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(224, 242, 235, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(10, 124, 95, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary-dark), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .back-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .back-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .csrd-badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid var(--primary);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            margin: 50px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .definition-box {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .definition-box h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .definition-box h3 i {
+            color: var(--accent);
+        }
+        
+        /* Process Steps */
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-bottom-left-radius: 20px;
+        }
+        
+        .step h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            padding-right: 50px;
+        }
+        
+        .step p {
+            margin-bottom: 15px;
+        }
+        
+        .step ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .step li {
+            margin-bottom: 10px;
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        /* Materiality Dimensions */
+        .dimensions {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .dimension-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dimension-card.impact {
+            border-top: 4px solid var(--primary);
+        }
+        
+        .dimension-card.financial {
+            border-top: 4px solid var(--secondary);
+        }
+        
+        .dimension-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dimension-card h3 i {
+            font-size: 1.8rem;
+        }
+        
+        .dimension-card ul {
+            padding-left: 20px;
+            margin-top: 20px;
+        }
+        
+        .dimension-card li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .dimension-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Best Practices */
+        .best-practices {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .practice-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 20px;
+            transition: var(--transition);
+        }
+        
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .practice-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        
+        .practice-content h4 {
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 30px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .step, .dimension-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-seedling logo-icon"></i>
+                <div class="logo-text">ESG FRAMEWORKS</div>
+            </a>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Main Hub
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="csrd-badge">CSRD Compliance</span>
+            <h1>Double Materiality Assessment</h1>
+            <p>The cornerstone of the Corporate Sustainability Reporting Directive (CSRD) that helps organizations identify and report on sustainability matters that truly impact their business and stakeholders.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Definition Section -->
+        <section class="content-section">
+            <div class="definition-box">
+                <h3><i class="fas fa-lightbulb"></i> What is Double Materiality?</h3>
+                <p>Double materiality is a concept introduced by the EU's Corporate Sustainability Reporting Directive (CSRD) that requires companies to assess and report on sustainability matters from two perspectives:</p>
+                
+                <div class="dimensions">
+                    <div class="dimension-card impact">
+                        <h3><i class="fas fa-globe-europe"></i> Impact Materiality</h3>
+                        <p>How the company's activities impact the environment and society, including human rights.</p>
+                    </div>
+                    
+                    <div class="dimension-card financial">
+                        <h3><i class="fas fa-chart-line"></i> Financial Materiality</h3>
+                        <p>How sustainability matters affect the company's development, performance, and position.</p>
+                    </div>
+                </div>
+                
+                <p>This dual perspective ensures that companies consider both their outward impact on society and environment, and the inward impact of sustainability issues on their business value.</p>
+            </div>
+        </section>
+        
+        <!-- Process Steps -->
+        <section class="content-section">
+            <h2 class="section-title">The Double Materiality Assessment Process</h2>
+            <p>Conducting a double materiality assessment involves a structured approach to identify and prioritize sustainability matters. Follow these steps to ensure CSRD compliance:</p>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Define Assessment Scope</h3>
+                    <p>Establish the boundaries of your assessment, considering:</p>
+                    <ul>
+                        <li>Your organization's value chain</li>
+                        <li>Geographical locations of operations</li>
+                        <li>Relevant business units and subsidiaries</li>
+                        <li>Timeframe for the assessment</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <h3>Identify Sustainability Matters</h3>
+                    <p>Compile a comprehensive list of potential sustainability matters using:</p>
+                    <ul>
+                        <li>ESRS topical standards</li>
+                        <li>Sector-specific guidelines</li>
+                        <li>Global sustainability frameworks</li>
+                        <li>Stakeholder concerns and expectations</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Assess Impact Materiality</h3>
+                    <p>Evaluate each matter based on:</p>
+                    <ul>
+                        <li>Scale of impact (severity)</li>
+                        <li>Scope of impact (breadth)</li>
+                        <li>Irremediable character</li>
+                        <li>Likelihood of impact occurring</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Assess Financial Materiality</h3>
+                    <p>Evaluate each matter based on:</p>
+                    <ul>
+                        <li>Potential financial effects</li>
+                        <li>Time horizon (short, medium, long-term)</li>
+                        <li>Probability of occurrence</li>
+                        <li>Connection to business model and strategy</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h3>Prioritize Material Matters</h3>
+                    <p>Combine both assessments to identify:</p>
+                    <ul>
+                        <li>Matters material from both perspectives</li>
+                        <li>Matters material only from one perspective</li>
+                        <li>Materiality thresholds for reporting</li>
+                        <li>Interconnections between matters</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Report & Disclose</h3>
+                    <p>Integrate material matters into your reporting:</p>
+                    <ul>
+                        <li>Prepare disclosures according to ESRS</li>
+                        <li>Explain materiality assessment process</li>
+                        <li>Present materiality matrix</li>
+                        <li>Connect to business strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Materiality Matrix -->
+        <section class="content-section">
+            <h2 class="section-title">Materiality Matrix Visualization</h2>
+            <p>The materiality matrix is a key tool for visualizing the results of your double materiality assessment:</p>
+            
+            <div style="background-color: white; border-radius: var(--border-radius); padding: 30px; box-shadow: var(--shadow); margin: 40px 0; text-align: center;">
+                <div style="max-width: 700px; margin: 0 auto; position: relative;">
+                    <div style="position: relative; height: 400px; background-color: var(--light); border: 1px solid #ddd; border-radius: var(--border-radius);">
+                        <!-- Axes -->
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: #333; transform-origin: left; transform: rotate(0deg);"></div>
+                        <div style="position: absolute; bottom: 0; left: 0; width: 1px; height: 100%; background: #333;"></div>
+                        
+                        <!-- Labels -->
+                        <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-weight: 600; color: var(--primary);">Impact Materiality</div>
+                        <div style="position: absolute; bottom: 10px; left: -70px; transform: rotate(-90deg); font-weight: 600; color: var(--secondary);">Financial Materiality</div>
+                        
+                        <!-- Quadrants -->
+                        <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); font-weight: 600; color: var(--primary-dark);">High Impact</div>
+                        <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);">Low Impact</div>
+                        <div style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); font-weight: 600; color: var(--secondary);">High Financial</div>
+                        <div style="position: absolute; top: 50%; left: 20px; transform: translateY(-50%);">Low Financial</div>
+                        
+                        <!-- Quadrant Labels -->
+                        <div style="position: absolute; top: 30px; right: 30px; background-color: rgba(10, 124, 95, 0.1); padding: 10px; border-radius: var(--border-radius); border: 1px solid var(--primary);">
+                            <strong>High Priority</strong>
+                            <div>Significant impact and financial effect</div>
+                        </div>
+                        
+                        <div style="position: absolute; top: 30px; left: 30px; background-color: rgba(249, 168, 38, 0.1); padding: 10px; border-radius: var(--border-radius); border: 1px solid var(--accent);">
+                            <strong>Impact Focus</strong>
+                            <div>Significant impact, lower financial effect</div>
+                        </div>
+                        
+                        <div style="position: absolute; bottom: 30px; right: 30px; background-color: rgba(44, 95, 124, 0.1); padding: 10px; border-radius: var(--border-radius); border: 1px solid var(--secondary);">
+                            <strong>Financial Focus</strong>
+                            <div>Significant financial effect, lower impact</div>
+                        </div>
+                        
+                        <div style="position: absolute; bottom: 30px; left: 30px; padding: 10px; border: 1px dashed #ccc; border-radius: var(--border-radius);">
+                            <strong>Monitor</strong>
+                            <div>Lower priority matters</div>
+                        </div>
+                        
+                        <!-- Example Points -->
+                        <div style="position: absolute; top: 30%; right: 35%; width: 12px; height: 12px; background-color: var(--primary); border-radius: 50%;"></div>
+                        <div style="position: absolute; top: 60%; left: 30%; width: 12px; height: 12px; background-color: var(--secondary); border-radius: 50%;"></div>
+                        <div style="position: absolute; top: 40%; left: 60%; width: 12px; height: 12px; background-color: var(--accent); border-radius: 50%;"></div>
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-style: italic; color: #666;">Figure: Double Materiality Matrix showing the relationship between impact and financial materiality</p>
+            </div>
+            
+            <p>This visualization helps prioritize sustainability matters based on their significance from both perspectives. Matters in the upper-right quadrant require the most attention and comprehensive disclosure.</p>
+        </section>
+        
+        <!-- Best Practices -->
+        <section class="content-section">
+            <h2 class="section-title">Best Practices for CSRD Compliance</h2>
+            <p>Implementing an effective double materiality assessment requires careful planning and execution:</p>
+            
+            <div class="best-practices">
+                <div class="practice-card">
+                    <div class="practice-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="practice-content">
+                        <h4>Stakeholder Engagement</h4>
+                        <p>Involve diverse stakeholders including investors, employees, communities, and suppliers throughout the process.</p>
+                    </div>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="practice-content">
+                        <h4>Dynamic Process</h4>
+                        <p>Treat materiality assessment as an ongoing process rather than a one-time exercise, with regular reviews.</p>
+                    </div>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="practice-content">
+                        <h4>Value Chain Focus</h4>
+                        <p>Extend your assessment beyond direct operations to include upstream and downstream value chain impacts.</p>
+                    </div>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="practice-content">
+                        <h4>Data-Driven Approach</h4>
+                        <p>Collect and analyze quantitative data alongside qualitative insights to support your materiality determinations.</p>
+                    </div>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <div class="practice-content">
+                        <h4>Board Accountability</h4>
+                        <p>Ensure board-level oversight and approval of materiality assessment results and disclosures.</p>
+                    </div>
+                </div>
+                
+                <div class="practice-card">
+                    <div class="practice-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="practice-content">
+                        <h4>Audit Trail</h4>
+                        <p>Maintain comprehensive documentation of your assessment process, criteria, and decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Timeline -->
+        <section class="content-section">
+            <h2 class="section-title">CSRD Implementation Timeline</h2>
+            <p>Understanding the regulatory timeline is crucial for effective planning:</p>
+            
+            <div style="background-color: white; border-radius: var(--border-radius); padding: 30px; box-shadow: var(--shadow); margin-top: 30px;">
+                <div style="display: flex; flex-direction: column; gap: 25px; position: relative; margin-left: 20px; padding-left: 30px; border-left: 3px solid var(--primary);">
+                    <div style="position: absolute; left: -10px; top: 0; width: 20px; height: 20px; background-color: var(--primary); border-radius: 50%;"></div>
+                    
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary-light); color: var(--primary-dark); padding: 5px 15px; border-radius: 30px; font-weight: 600;">2023</div>
+                            <h3 style="color: var(--primary-dark);">Preparation Phase</h3>
+                        </div>
+                        <p style="margin-top: 10px; padding-left: 20px;">Companies begin gap analysis, establish governance structures, and develop implementation plans.</p>
+                    </div>
+                    
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary-light); color: var(--primary-dark); padding: 5px 15px; border-radius: 30px; font-weight: 600;">2024</div>
+                            <h3 style="color: var(--primary-dark);">Initial Implementation</h3>
+                        </div>
+                        <p style="margin-top: 10px; padding-left: 20px;">First wave of companies conduct double materiality assessments and begin data collection processes.</p>
+                    </div>
+                    
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary-light); color: var(--primary-dark); padding: 5px 15px; border-radius: 30px; font-weight: 600;">2025</div>
+                            <h3 style="color: var(--primary-dark);">First Reporting Period</h3>
+                        </div>
+                        <p style="margin-top: 10px; padding-left: 20px;">Large EU companies publish their first CSRD-aligned sustainability statements for FY2024.</p>
+                    </div>
+                    
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="background-color: var(--primary-light); color: var(--primary-dark); padding: 5px 15px; border-radius: 30px; font-weight: 600;">2026</div>
+                            <h3 style="color: var(--primary-dark);">Expansion Phase</h3>
+                        </div>
+                        <p style="margin-top: 10px; padding-left: 20px;">Requirements extend to listed SMEs and non-EU companies with significant EU presence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-seedling"></i>
+                        ESG FRAMEWORKS
+                    </div>
+                    <p>Providing comprehensive resources for sustainability reporting and compliance.</p>
+                    <p>ESG Frameworks helps organizations navigate complex regulatory requirements and implement effective sustainability strategies.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">CSRD Implementation Guide</a></li>
+                        <li><a href="#">Double Materiality Toolkit</a></li>
+                        <li><a href="#">ESRS Standards Overview</a></li>
+                        <li><a href="#">Sector-Specific Guidance</a></li>
+                        <li><a href="#">Reporting Templates</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance Statement</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 ESG Frameworks. All rights reserved. This content is for informational purposes only.</p>
+                <p>ESG Frameworks is not affiliated with the European Commission or any regulatory body.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
