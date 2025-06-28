@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Double Materiality Matrix | CSRD Compliance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a7c5f;
+            --primary-dark: #08684f;
+            --primary-light: #e0f2eb;
+            --secondary: #2c5f7c;
+            --accent: #f9a826;
+            --light: #f8fafc;
+            --dark: #1a2e35;
+            --text: #334e58;
+            --transition: all 0.3s ease;
+            --border-radius: 8px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9fbfa;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(224, 242, 235, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(10, 124, 95, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, var(--primary-dark), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+        }
+        
+        .logo-text {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .back-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+        
+        .back-link:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .csrd-badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid var(--primary);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            margin: 50px 0;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        /* Materiality Matrix Section */
+        .matrix-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .matrix-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .matrix-header h3 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .matrix-header p {
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .matrix-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .matrix-svg-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .matrix-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .quadrant-label {
+            position: absolute;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 120px;
+        }
+        
+        .quadrant-high-priority {
+            top: 10%;
+            right: 10%;
+            background-color: rgba(10, 124, 95, 0.15);
+            color: var(--primary-dark);
+            border: 1px solid var(--primary);
+        }
+        
+        .quadrant-impact {
+            top: 10%;
+            left: 10%;
+            background-color: rgba(249, 168, 38, 0.15);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+        
+        .quadrant-financial {
+            bottom: 10%;
+            right: 10%;
+            background-color: rgba(44, 95, 124, 0.15);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+        
+        .quadrant-monitor {
+            bottom: 10%;
+            left: 10%;
+            background-color: rgba(200, 200, 200, 0.15);
+            color: #666;
+            border: 1px dashed #ccc;
+        }
+        
+        .axis-label {
+            position: absolute;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .y-axis-label {
+            top: 50%;
+            left: -40px;
+            transform: translateY(-50%) rotate(-90deg);
+            color: var(--primary);
+        }
+        
+        .x-axis-label {
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--secondary);
+        }
+        
+        .matrix-point {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        
+        .matrix-point:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            z-index: 20;
+        }
+        
+        .point-tooltip {
+            position: absolute;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--shadow);
+            z-index: 30;
+            max-width: 250px;
+            transform: translate(-50%, calc(-100% - 20px));
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .matrix-point:hover .point-tooltip {
+            opacity: 1;
+        }
+        
+        .point-tooltip h4 {
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .point-tooltip p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        .matrix-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .legend-label {
+            font-size: 0.9rem;
+        }
+        
+        /* Process Steps */
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-bottom-left-radius: 20px;
+        }
+        
+        .step h3 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            padding-right: 50px;
+        }
+        
+        .step p {
+            margin-bottom: 15px;
+        }
+        
+        .step ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .step li {
+            margin-bottom: 10px;
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 30px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .step {
+                min-width: 100%;
+            }
+            
+            .quadrant-label {
+                font-size: 0.8rem;
+                padding: 5px 8px;
+                max-width: 100px;
+            }
+            
+            .y-axis-label {
+                left: -30px;
+                font-size: 0.9rem;
+            }
+            
+            .x-axis-label {
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .matrix-svg-container {
+                margin-bottom: 30px;
+            }
+            
+            .y-axis-label {
+                left: -25px;
+                font-size: 0.8rem;
+            }
+            
+            .x-axis-label {
+                font-size: 0.8rem;
+            }
+            
+            .quadrant-label {
+                position: relative;
+                top: auto;
+                left: auto;
+                right: auto;
+                bottom: auto;
+                margin: 10px auto;
+                display: block;
+                max-width: 100%;
+            }
+            
+            .matrix-wrapper {
+                flex-direction: column;
+            }
+            
+            .matrix-legend {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-seedling logo-icon"></i>
+                <div class="logo-text">ESG FRAMEWORKS</div>
+            </a>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Main Hub
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="csrd-badge">CSRD Compliance</span>
+            <h1>Double Materiality Assessment</h1>
+            <p>The cornerstone of the Corporate Sustainability Reporting Directive (CSRD) that helps organizations identify and report on sustainability matters that truly impact their business and stakeholders.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Materiality Matrix Section -->
+        <section class="content-section">
+            <h2 class="section-title">Materiality Matrix Visualization</h2>
+            <p>The materiality matrix is a key tool for visualizing the results of your double materiality assessment:</p>
+            
+            <div class="matrix-container">
+                <div class="matrix-header">
+                    <h3>Double Materiality Matrix</h3>
+                    <p>Visual representation of how sustainability issues impact both your business and stakeholders</p>
+                </div>
+                
+                <div class="matrix-wrapper">
+                    <div class="matrix-svg-container">
+                        <svg class="matrix-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Grid background -->
+                            <rect x="0" y="0" width="600" height="600" fill="#f8fafc" stroke="#ddd" stroke-width="1"/>
+                            
+                            <!-- Quadrant backgrounds -->
+                            <path d="M300,0 L600,0 L600,300 L300,300 Z" fill="rgba(10, 124, 95, 0.05)" stroke="none"/>
+                            <path d="M0,0 L300,0 L300,300 L0,300 Z" fill="rgba(249, 168, 38, 0.05)" stroke="none"/>
+                            <path d="M300,300 L600,300 L600,600 L300,600 Z" fill="rgba(44, 95, 124, 0.05)" stroke="none"/>
+                            <path d="M0,300 L300,300 L300,600 L0,600 Z" fill="rgba(200, 200, 200, 0.05)" stroke="none"/>
+                            
+                            <!-- Axes -->
+                            <line x1="0" y1="300" x2="600" y2="300" stroke="#333" stroke-width="2" stroke-dasharray="4"/>
+                            <line x1="300" y1="0" x2="300" y2="600" stroke="#333" stroke-width="2" stroke-dasharray="4"/>
+                            
+                            <!-- Axis labels -->
+                            <text x="550" y="320" font-size="16" fill="var(--secondary)" text-anchor="middle">High Financial</text>
+                            <text x="50" y="320" font-size="16" fill="var(--secondary)" text-anchor="middle">Low Financial</text>
+                            <text x="310" y="30" font-size="16" fill="var(--primary)" text-anchor="start">High Impact</text>
+                            <text x="310" y="580" font-size="16" fill="var(--primary)" text-anchor="start">Low Impact</text>
+                            
+                            <!-- Quadrant labels -->
+                            <text x="450" y="100" font-size="18" font-weight="bold" fill="var(--primary-dark)" text-anchor="middle">High Priority</text>
+                            <text x="450" y="130" font-size="14" fill="var(--text)" text-anchor="middle">Significant impact and financial effect</text>
+                            
+                            <text x="150" y="100" font-size="18" font-weight="bold" fill="var(--accent)" text-anchor="middle">Impact Focus</text>
+                            <text x="150" y="130" font-size="14" fill="var(--text)" text-anchor="middle">Significant impact, lower financial effect</text>
+                            
+                            <text x="450" y="500" font-size="18" font-weight="bold" fill="var(--secondary)" text-anchor="middle">Financial Focus</text>
+                            <text x="450" y="530" font-size="14" fill="var(--text)" text-anchor="middle">Significant financial effect, lower impact</text>
+                            
+                            <text x="150" y="500" font-size="18" font-weight="bold" fill="#666" text-anchor="middle">Monitor</text>
+                            <text x="150" y="530" font-size="14" fill="var(--text)" text-anchor="middle">Lower priority matters</text>
+                            
+                            <!-- Example points -->
+                            <circle cx="450" cy="150" r="8" fill="var(--primary)" stroke="white" stroke-width="2"/>
+                            <circle cx="400" cy="200" r="8" fill="var(--primary)" stroke="white" stroke-width="2"/>
+                            <circle cx="350" cy="100" r="8" fill="var(--accent)" stroke="white" stroke-width="2"/>
+                            <circle cx="150" cy="180" r="8" fill="var(--accent)" stroke="white" stroke-width="2"/>
+                            <circle cx="500" cy="400" r="8" fill="var(--secondary)" stroke="white" stroke-width="2"/>
+                            <circle cx="450" cy="450" r="8" fill="var(--secondary)" stroke="white" stroke-width="2"/>
+                            <circle cx="200" cy="450" r="8" fill="#999" stroke="white" stroke-width="2"/>
+                            <circle cx="100" cy="500" r="8" fill="#999" stroke="white" stroke-width="2"/>
+                        </svg>
+                        
+                        <!-- HTML-based quadrant labels for better responsiveness -->
+                        <div class="quadrant-label quadrant-high-priority">High Priority</div>
+                        <div class="quadrant-label quadrant-impact">Impact Focus</div>
+                        <div class="quadrant-label quadrant-financial">Financial Focus</div>
+                        <div class="quadrant-label quadrant-monitor">Monitor</div>
+                        
+                        <!-- Axis labels -->
+                        <div class="axis-label y-axis-label">Impact Materiality</div>
+                        <div class="axis-label x-axis-label">Financial Materiality</div>
+                        
+                        <!-- Interactive points -->
+                        <div class="matrix-point" style="top: 25%; left: 75%; background-color: var(--primary);">
+                            <div class="point-tooltip">
+                                <h4>Carbon Emissions</h4>
+                                <p>High impact on environment and significant financial implications due to carbon pricing</p>
+                            </div>
+                        </div>
+                        <div class="matrix-point" style="top: 33%; left: 67%; background-color: var(--primary);">
+                            <div class="point-tooltip">
+                                <h4>Water Management</h4>
+                                <p>Critical for local communities and affects operational costs</p>
+                            </div>
+                        </div>
+                        <div class="matrix-point" style="top: 17%; left: 58%; background-color: var(--accent);">
+                            <div class="point-tooltip">
+                                <h4>Biodiversity</h4>
+                                <p>Significant ecological impact but moderate financial effect</p>
+                            </div>
+                        </div>
+                        <div class="matrix-point" style="top: 30%; left: 25%; background-color: var(--accent);">
+                            <div class="point-tooltip">
+                                <h4>Community Engagement</h4>
+                                <p>Important for social license to operate but limited direct financial impact</p>
+                            </div>
+                        </div>
+                        <div class="matrix-point" style="top: 67%; left: 83%; background-color: var(--secondary);">
+                            <div class="point-tooltip">
+                                <h4>Supply Chain Resilience</h4>
+                                <p>Significant financial risk but limited direct environmental impact</p>
+                            </div>
+                        </div>
+                        <div class="matrix-point" style="top: 75%; left: 75%; background-color: var(--secondary);">
+                            <div class="point-tooltip">
+                                <h4>Energy Costs</h4>
+                                <p>High financial impact with moderate environmental implications</p>
+                            </div>
+                        </div>
+                        <div class="matrix-point" style="top: 75%; left: 33%; background-color: #999;">
+                            <div class="point-tooltip">
+                                <h4>Office Recycling</h4>
+                                <p>Positive but low impact activity with minimal financial implications</p>
+                            </div>
+                        </div>
+                        <div class="matrix-point" style="top: 83%; left: 17%; background-color: #999;">
+                            <div class="point-tooltip">
+                                <h4>Employee Volunteering</h4>
+                                <p>Positive social impact with minimal financial significance</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="matrix-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--primary);"></div>
+                            <div class="legend-label">High Priority (Both)</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--accent);"></div>
+                            <div class="legend-label">Impact Focus</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--secondary);"></div>
+                            <div class="legend-label">Financial Focus</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #999;"></div>
+                            <div class="legend-label">Monitor</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 20px;">This visualization helps prioritize sustainability matters based on their significance from both perspectives. Matters in the upper-right quadrant require the most attention and comprehensive disclosure in your CSRD reporting.</p>
+        </section>
+        
+        <!-- Process Steps -->
+        <section class="content-section">
+            <h2 class="section-title">The Double Materiality Assessment Process</h2>
+            <p>Conducting a double materiality assessment involves a structured approach to identify and prioritize sustainability matters. Follow these steps to ensure CSRD compliance:</p>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Define Assessment Scope</h3>
+                    <p>Establish the boundaries of your assessment, considering:</p>
+                    <ul>
+                        <li>Your organization's value chain</li>
+                        <li>Geographical locations of operations</li>
+                        <li>Relevant business units and subsidiaries</li>
+                        <li>Timeframe for the assessment</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <h3>Identify Sustainability Matters</h3>
+                    <p>Compile a comprehensive list of potential sustainability matters using:</p>
+                    <ul>
+                        <li>ESRS topical standards</li>
+                        <li>Sector-specific guidelines</li>
+                        <li>Global sustainability frameworks</li>
+                        <li>Stakeholder concerns and expectations</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Assess Impact Materiality</h3>
+                    <p>Evaluate each matter based on:</p>
+                    <ul>
+                        <li>Scale of impact (severity)</li>
+                        <li>Scope of impact (breadth)</li>
+                        <li>Irremediable character</li>
+                        <li>Likelihood of impact occurring</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Assess Financial Materiality</h3>
+                    <p>Evaluate each matter based on:</p>
+                    <ul>
+                        <li>Potential financial effects</li>
+                        <li>Time horizon (short, medium, long-term)</li>
+                        <li>Probability of occurrence</li>
+                        <li>Connection to business model and strategy</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-icon">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h3>Prioritize Material Matters</h3>
+                    <p>Combine both assessments to identify:</p>
+                    <ul>
+                        <li>Matters material from both perspectives</li>
+                        <li>Matters material only from one perspective</li>
+                        <li>Materiality thresholds for reporting</li>
+                        <li>Interconnections between matters</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Report & Disclose</h3>
+                    <p>Integrate material matters into your reporting:</p>
+                    <ul>
+                        <li>Prepare disclosures according to ESRS</li>
+                        <li>Explain materiality assessment process</li>
+                        <li>Present materiality matrix</li>
+                        <li>Connect to business strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-seedling"></i>
+                        ESG FRAMEWORKS
+                    </div>
+                    <p>Providing comprehensive resources for sustainability reporting and compliance.</p>
+                    <p>ESG Frameworks helps organizations navigate complex regulatory requirements and implement effective sustainability strategies.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">CSRD Implementation Guide</a></li>
+                        <li><a href="#">Double Materiality Toolkit</a></li>
+                        <li><a href="#">ESRS Standards Overview</a></li>
+                        <li><a href="#">Sector-Specific Guidance</a></li>
+                        <li><a href="#">Reporting Templates</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Compliance Statement</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 ESG Frameworks. All rights reserved. This content is for informational purposes only.</p>
+                <p>ESG Frameworks is not affiliated with the European Commission or any regulatory body.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
